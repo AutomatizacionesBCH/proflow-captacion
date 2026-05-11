@@ -25,6 +25,7 @@ export function LeadCaptureForm({ utm }: Props) {
   const [isPending, startTransition] = useTransition()
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [urgencia, setUrgencia] = useState<UrgenciaValue | ''>('')
+  const [aceptaContacto, setAceptaContacto] = useState(false)
   const utmJson = useMemo(() => JSON.stringify(utm), [utm])
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -227,6 +228,8 @@ export function LeadCaptureForm({ utm }: Props) {
             type="checkbox"
             name="acepta_contacto"
             value="true"
+            checked={aceptaContacto}
+            onChange={(e) => setAceptaContacto(e.target.checked)}
             className="mt-0.5 h-4 w-4 shrink-0 rounded border-[#CBD5E1] text-[#043D35] accent-[#043D35] focus:ring-[#043D35] cursor-pointer"
           />
           <span className="text-sm text-[#374151] leading-snug group-hover:text-[#0F172A] transition-colors">
@@ -245,7 +248,7 @@ export function LeadCaptureForm({ utm }: Props) {
       <div className="pt-1">
         <button
           type="submit"
-          disabled={isPending}
+          disabled={!aceptaContacto || isPending}
           className="
             w-full flex items-center justify-center gap-2
             bg-[#043D35] text-white text-sm font-semibold
