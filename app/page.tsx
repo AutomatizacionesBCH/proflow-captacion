@@ -56,5 +56,5 @@ export default async function Home({ searchParams }: Props) {
 
   const content = VARIANTS[variant]
 
-  return <LandingPage content={content} utm={mergedUtm} />
+  return <LandingPage variant={variant} content={content} utm={mergedUtm} />
 }
