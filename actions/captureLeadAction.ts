@@ -93,11 +93,11 @@ export async function captureLeadAction(
     return { success: false, errors: { form: captureResult.error } }
   }
 
-  // --- Build WhatsApp redirect URL ---
-  const waNumber =
-    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '56966810468'
-  const message = `Hola, me interesa recibir orientación personalizada sobre evaluación de cupo internacional. Mi nombre es ${full_name}.`
-  const redirectUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`
+  // Prefer whatsappUrl from server; build locally as fallback if missing
+  const waNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '56966810468'
+  const fallbackMessage = `Hola, me interesa recibir orientación personalizada sobre evaluación de cupo internacional. Mi nombre es ${full_name}.`
+  const fallbackUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(fallbackMessage)}`
+  const redirectUrl = captureResult.whatsappUrl ?? fallbackUrl
 
   return {
     success: true,

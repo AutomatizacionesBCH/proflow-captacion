@@ -17,7 +17,7 @@ export type CaptureInput = {
 }
 
 export type CaptureResult =
-  | { success: true; leadId: string; isNew: boolean }
+  | { success: true; leadId: string; isNew: boolean; whatsappUrl?: string }
   | { success: false; error: string }
 
 export async function captureLeadOnServer(
@@ -63,8 +63,9 @@ export async function captureLeadOnServer(
     const data = (await response.json()) as {
       leadId: string
       isNew: boolean
+      whatsappUrl?: string
     }
-    return { success: true, leadId: data.leadId, isNew: data.isNew }
+    return { success: true, leadId: data.leadId, isNew: data.isNew, whatsappUrl: data.whatsappUrl }
   } catch {
     return { success: false, error: 'Respuesta inesperada del servidor' }
   }
